@@ -2,29 +2,29 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <h1>Search Section</h1>
-                <form class="form-inline" @submit.prevent="getMusicByArtist">
+                <h1>Search Results</h1>
+                <!-- <form class="form-inline" @submit.prevent="getMusicByArtist">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="artist" placeholder="Search for Music" v-model="results.artist">
+                        <input type="text" class="form-control" name="artist" placeholder="Search for Music" v-model="search">
                         <button type="submit" class="btn btn-submit" id="search-button">Search</button>
                     </div>
-                </form>
+                </form> -->
             </div>
         </div>
         <div class="row">
-            <div v-for="data in results">
-                <div class="song-card col-xs-12 text-center black-border">
-                    <h4>{{song.title}}</h4>
+            <div v-for="song in results">
+                <div class="song-card col-xs-12 text-center" style="border: black">
                     <h4>
-                        <img :src="song.albumArt">
+                        <img :src="song.artworkUrl100">
                     </h4>
-                    <h4>{{song.artist}}</h4>
-                    <h4>{{song.collection}}</h4>
-                    <h4>${{song.price}}</h4>
+                    <h3>{{song.trackName}}</h3>
+                    <h4>{{song.artistName}}</h4>
+                    <h4>{{song.collectionName}}</h4>
+                    <h4>${{song.trackPrice}}</h4>
                     <h4>
                         <i class="glyphicon glyphicon-plus" @click="addToMyTunes(song)"></i>
                         <audio controls class="audio">
-                            <source :src="song.preview" type="audio/ogg">
+                            <source :src="song.previewUrl" type="audio/ogg">
                         </audio>
                     </h4>
                 </div>
@@ -41,14 +41,16 @@
         name: 'SongList',
         data() {
             return {
-                
+                // search: '',
+
             }
         },
         methods: {
-            getMusicByArtist() {
-                this.$store.dispatch('getMusicByArtist', this.artist)
-            },
+            // getMusicByArtist() {
+            //     this.$store.dispatch('getMusicByArtist', this.search)
+            // },
             addToMyTunes(song) {
+                song.position = this.$store.state.myTunes.length
                 this.$store.dispatch('addToMyTunes', song)
             }
 

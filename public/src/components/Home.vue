@@ -4,11 +4,21 @@
     <!-- YOU WILL PROBABLY END UP WITH SOMETHING LIKE THIS -->
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-6">
-          <my-playlist class="myPlaylist"></my-playlist>
+        <div class="col-xs-12">
+          <form class="form-inline" @submit.prevent="getMusicByArtist">
+            <div class="form-group">
+              <input type="text" class="form-control" name="artist" placeholder="Search for Music" v-model="search">
+              <button type="submit" class="btn btn-submit" id="search-button">Search</button>
+            </div>
+          </form>
         </div>
+      </div>
+      <div class="row">
         <div class="col-sm-6">
           <song-list class="songlist"></song-List>
+        </div>
+        <div class="col-sm-6">
+          <my-playlist class="myPlaylist"></my-playlist>
         </div>
       </div>
     </div>
@@ -23,7 +33,23 @@
     components: {
       MyPlaylist,
       SongList
-    }
+    },
+    data(){
+      return{
+        search:''
+      }
+    },
+    methods: {
+            getMusicByArtist() {
+                this.$store.dispatch('getMusicByArtist', this.search)
+            },
+        },
+        computed: {
+            results() {
+                return this.$store.state.results
+            }
+
+        }
   }
 </script>
 

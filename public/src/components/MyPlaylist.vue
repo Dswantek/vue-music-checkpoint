@@ -5,7 +5,34 @@
                 <h1>Playlist Selection</h1>
             </div>
         </div>
-       
+        <div class="row">
+            <div v-for="song in myTunes">
+                <div class="song-card col-xs-12 text-center" style="border: black">
+                    <h4>
+                        <img :src="song.albumArt">
+                    </h4>
+                    <h3>{{song.title}}</h3>
+                    <h4>{{song.artist}}</h4>
+                    <h4>{{song.album}}</h4>
+                    <h4>${{song.price}}</h4>
+                    <h4>
+                        <i class="glyphicon glyphicon-trash" @click="removeFromPlaylist(song)"></i>
+                        <audio controls class="audio">
+                            <source :src="song.preview" type="audio/ogg">
+                        </audio>
+                    </h4>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <i class="glyphicon glyphicon-chevron-up" @click="promoteTrack(song)"></i>
+                        </div>
+                        <div class="col-xs-6">
+                            <i class="glyphicon glyphicon-chevron-down" @click="demoteTrack(song)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -13,26 +40,40 @@
 </template>
 
 <script>
-export default {
-        data(){
+    export default {
+        data() {
             return {
-                playlists: {}
+                
             }
         },
-        methods:{
-            addToPlaylist(myTunes){
-                this.$store.dispatch('addSong', myTunes)
+        mounted() {
+            this.$store.dispatch('getMyTunes')
+
+        },
+        methods: {
+            addToMyTunes(song) {
+                this.$store.dispatch('addToMyTunes', song)
             },
-            removeFromPlaylist(myTunes){
-                this.$store.dispatch('removeSong', myTunes)
+            removeFromPlaylist(song) {
+                this.$store.dispatch('removeFromPlaylist', song)
+            },
+            promoteTrack(song){
+            
+                    song.position--
+                    this.$store.dispatch('promoteTrack', song)
+            },
+            demoteTrack(song){
+                song.position++
+                this.$store.dispatch('demoteTrack', song)
             }
-    
+
         },
         computed: {
-            myPlaylists(){
-                return this.$store.state.myPlaylists
+            myTunes() {
+                return this.$store.state.myTunes
             }
-           
+
+
         }
     }
 
@@ -40,6 +81,4 @@ export default {
 </script>
 
 <style>
-
-
 </style>

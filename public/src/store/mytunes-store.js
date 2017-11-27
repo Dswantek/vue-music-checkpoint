@@ -11,10 +11,13 @@ var store = new vuex.Store({
   },
   mutations: {
     setResults(state, results) {
-      state.results = results
+      state.results = results.results
     },
-    setPlaylist(state, playlist) {
-      state.playlist = playlist
+    setPlaylist(state, songs) {
+      songs.sort(function (a, b) {
+        return a.position - b.position;
+      })
+      state.myTunes = songs
     }
   },
   actions: {
@@ -22,17 +25,16 @@ var store = new vuex.Store({
       var url = '//bcw-getter.herokuapp.com/?url=';
       var url2 = 'https://itunes.apple.com/search?term=' + artist;
       var apiUrl = url + encodeURIComponent(url2);
-      $.get(apiUrl).then(data => {
-        // results = data.results.map(function (song) {
+      $.getJSON(apiUrl).then(data => {
 
-          // return {
-          //   title: CDATASection.trackName,
-          //   albumArt: CDATASection.artworkUrl100,
-          //   artist: CDATASection.artistName,
-          //   collection: CDATASection.collectionName,
-          //   price: CDATASection.collectionPrice,
-          //   preview: CDATASection.previewUrl
-          // }
+        // return {
+        //   title: data.trackName,
+        //   albumArt: data.artworkUrl100,
+        //   artist: data.artistName,
+        //   collection: data.collectionName,
+        //   price: data.collectionPrice,
+        //   preview: data.previewUrl
+        // }
         // })
         commit('setResults', data)
         console.log(data)
@@ -41,37 +43,77 @@ var store = new vuex.Store({
 
     getMyTunes({ commit, dispatch }) {
       //this should send a get request to your server to return the list of saved tunes
-      var url = 'http://localhost:3000/api/songs/${song.id}'
-      
-      $.get(url).then(data => {
-        commit('setPlaylist', data)
-      })
+      var url = 'http://localhost:3000/api/songs'
+
+      $.getJSON('http://localhost:3000/api/songs')
+        .then(songs => {
+
+          commit('setPlaylist', songs)
+          console.log(songs)
+        })
 
     },
 
-    addToMyTunes({ commit, dispatch }, track) {
+    addToMyTunes({ commit, dispatch }, song) {
+      var url = 'http://localhost:3000/api/songs'
       //this will post to your server adding a new track to your tunes
-      state.myTunes.push(track)
+      var song = {
+        title: song.trackName,
+        albumArt: song.artworkUrl100,
+        artist: song.artistName,
+        album: song.collectionName,
+        price: song.trackPrice,
+        preview: song.previewUrl,
+        position: song.position
+        // playlistId: 
+      }
+      $.post(url, song)
+        .then(res => {
+          dispatch('getMyTunes')
+        })
     },
 
-    removeTrack({ commit, dispatch }, track) {
+    removeFromPlaylist({ commit, dispatch }, song) {
       //Removes track from the database with delete
-      var url = 'http://localhost:3000/api/songs/${song._id}'
+      var url = 'http://localhost:3000/api/songs/'
       $.ajax({
         method: 'DELETE',
-        url: url
+        url: url + song._id
       }).then(res => dispatch('getMyTunes'))
+      console.log(song._id)
     },
 
-    promoteTrack({ commit, dispatch }, track) {
+    promoteTrack({ commit, dispatch }, song) {
       //this should increase the position / upvotes and downvotes on the track
+      $.ajax({
+      url: 'http://localhost:3000/api/songs/' + song._id,
+      method: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(song)
+    })
+    .then(res => {
+      console.log(res)
+      dispatch('getMyTunes')
+    })
+
     },
 
-    demoteTrack({ commit, dispatch }, track) {
+    demoteTrack({ commit, dispatch }, song) {
       //this should decrease the position / upvotes and downvotes on the track
+      $.ajax({
+      url: 'http://localhost:3000/api/songs/' + song._id,
+      method: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(song)
+    })
+    .then(res => {
+      dispatch('getMyTunes')
+    })
+
     }
 
   }
 })
+
 
 export default store
