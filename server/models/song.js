@@ -9,6 +9,7 @@ var schema = new mongoose.Schema({
     price: { type: String, required: true },
     preview: { type: String, required: true },
     playlistId: { type: ObjectId, required: true }
+    // position: {}   //use numerical value to position them above one another.
 })
 
 module.exports = mongoose.model('Song', schema)

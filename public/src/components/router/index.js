@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import SlapGame from '@/components/SongList'
+import SongList from '@/components/SongList'
 
 
 

@@ -1,5 +1,10 @@
 <template>
-    <div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Playlist Selection</h1>
+            </div>
+        </div>
        
     </div>
 
@@ -24,6 +29,9 @@ export default {
     
         },
         computed: {
+            myPlaylists(){
+                return this.$store.state.myPlaylists
+            }
            
         }
     }
