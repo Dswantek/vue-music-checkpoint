@@ -22,10 +22,15 @@
                         </audio>
                     </h4>
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <i class="glyphicon glyphicon-chevron-up" @click="promoteTrack(song)"></i>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
+                            <p>
+                                {{song.position}}
+                            </p>
+                        </div>
+                        <div class="col-xs-4">
                             <i class="glyphicon glyphicon-chevron-down" @click="demoteTrack(song)"></i>
                         </div>
                     </div>
@@ -43,7 +48,7 @@
     export default {
         data() {
             return {
-                
+            
             }
         },
         mounted() {
@@ -57,14 +62,18 @@
             removeFromPlaylist(song) {
                 this.$store.dispatch('removeFromPlaylist', song)
             },
-            promoteTrack(song){
-            
+            promoteTrack(song) {
+                if (song.position > 0) {
                     song.position--
                     this.$store.dispatch('promoteTrack', song)
+                }
             },
-            demoteTrack(song){
-                song.position++
-                this.$store.dispatch('demoteTrack', song)
+            demoteTrack(song, myTunes) {
+                debugger
+                // if (song.position < myTunes.length) {
+                    song.position++
+                    this.$store.dispatch('demoteTrack', song)
+                // }
             }
 
         },
@@ -85,12 +94,12 @@
         background-color: black;
         color: white;
     }
-    .heading{
+
+    .heading {
         font-family: 'Rock Salt', cursive;
     }
-    .song-card{
+
+    .song-card {
         border: white 5px;
     }
-
-
 </style>
