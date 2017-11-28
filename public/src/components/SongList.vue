@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 heading">
                 <h1>Search Results</h1>
                 <!-- <form class="form-inline" @submit.prevent="getMusicByArtist">
                     <div class="form-group">
@@ -67,4 +67,8 @@
 </script>
 
 <style>
+    .heading{
+        font-family: 'Rock Salt', cursive;
+    }
+
 </style>

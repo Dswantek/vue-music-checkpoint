@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12">
-                <h1>Playlist Selection</h1>
+            <div class="heading col-xs-12">
+                <h1>Your Playlist</h1>
             </div>
         </div>
         <div class="row">
@@ -81,4 +81,16 @@
 </script>
 
 <style>
+    body {
+        background-color: black;
+        color: white;
+    }
+    .heading{
+        font-family: 'Rock Salt', cursive;
+    }
+    .song-card{
+        border: white 5px;
+    }
+
+
 </style>
