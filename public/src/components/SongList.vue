@@ -67,8 +67,7 @@
 </script>
 
 <style>
-    .heading{
+    .heading {
         font-family: 'Rock Salt', cursive;
     }
-
 </style>

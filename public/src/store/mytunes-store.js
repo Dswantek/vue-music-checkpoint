@@ -7,17 +7,29 @@ vue.use(vuex)
 var store = new vuex.Store({
   state: {
     myTunes: [],
-    results: []
+    results: [],
+    playlists: [],
+    activePlaylist: []
   },
   mutations: {
     setResults(state, results) {
       state.results = results.results
     },
+    // setPlaylist(state, songs) {
+    //   songs.sort(function (a, b) {
+    //     return a.position - b.position;
+    //   })
+    //   state.myTunes = songs
+    // },
     setPlaylist(state, songs) {
       songs.sort(function (a, b) {
         return a.position - b.position;
       })
-      state.myTunes = songs
+      state.activePlaylist._id = songs
+    },
+    setActivePlaylist(state, playlist) {
+      // vue.set(state, 'activePlaylist', playlist)
+      state.activePlaylist = playlist
     }
   },
   actions: {
