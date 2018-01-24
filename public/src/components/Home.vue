@@ -5,7 +5,7 @@
         <div class="navbar-header col-xs-12 col-md-1 text-center">
           <!-- "BRAND" IMAGE -->
           <a class="navbar-brand">
-            <img class="nav-img" alt="Brand" src="//placehold.it/50vh">
+            <img class="nav-img" alt="Brand" src="https://www.polyvore.com/cgi/img-thing?.out=jpg&size=l&tid=46703060">
           </a>
         </div>
 
@@ -159,7 +159,7 @@
     margin: 5vh;
   }
 
-  .modal{
+  .modal {
     color: black;
   }
 
@@ -170,4 +170,10 @@
   .song-card {
     border: white 5px;
   }
+  .nav-img{
+    background: transparent;
+    width: 5vw;
+    height: 10vh;
+  }
+
 </style>
