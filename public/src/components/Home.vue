@@ -172,8 +172,8 @@
   }
   .nav-img{
     background: transparent;
-    width: 5vw;
-    height: 10vh;
+    width: 4vw;
+    height: 7vh;
   }
 
 </style>
