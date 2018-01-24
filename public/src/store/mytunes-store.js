@@ -37,7 +37,7 @@ var store = new vuex.Store({
       // var url = '//bcw-getter.herokuapp.com/?url=';
       var url2 = 'https://itunes.apple.com/search?term=' + artist;
       var apiUrl = url + encodeURIComponent(url2);
-      $.getJSON(apiUrl2).then(data => {
+      $.getJSON(url2).then(data => {
 
         // return {
         //   title: data.trackName,
