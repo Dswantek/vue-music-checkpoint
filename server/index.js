@@ -11,7 +11,7 @@ var port = 3000
 server.use(cors({}))
 server.use(bp.json())
 server.use(bp.urlencoded({extended: true}))
-server.use(express.static(__dirname + '/public'))
+server.use(express.static(__dirname + '/../public/dist'))
 // server.use(sessions)
 
 
@@ -37,7 +37,7 @@ server.use(myPlaylistRoutes)
 //     next()
 // }
 
-server.listen(port, function(){
+server.listen(process.env.PORT || port, () => {
     console.log('Server running on: ', port)
 })
 

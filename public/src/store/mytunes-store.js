@@ -34,10 +34,10 @@ var store = new vuex.Store({
   },
   actions: {
     getMusicByArtist({ commit, dispatch }, artist) {
-      var url = '//bcw-getter.herokuapp.com/?url=';
+      // var url = '//bcw-getter.herokuapp.com/?url=';
       var url2 = 'https://itunes.apple.com/search?term=' + artist;
       var apiUrl = url + encodeURIComponent(url2);
-      $.getJSON(apiUrl).then(data => {
+      $.getJSON(apiUrl2).then(data => {
 
         // return {
         //   title: data.trackName,
@@ -57,7 +57,7 @@ var store = new vuex.Store({
       //this should send a get request to your server to return the list of saved tunes
       var url = 'http://localhost:3000/api/songs'
 
-      $.getJSON('http://localhost:3000/api/songs')
+      $.getJSON('https://vue-jambox3000.herokuapp.com/music/songs')
         .then(songs => {
 
           commit('setPlaylist', songs)
@@ -67,7 +67,7 @@ var store = new vuex.Store({
     },
 
     addToMyTunes({ commit, dispatch }, song) {
-      var url = 'http://localhost:3000/api/songs'
+      var url = 'https://vue-jambox3000.herokuapp.com/music/songs'
       //this will post to your server adding a new track to your tunes
       var song = {
         title: song.trackName,
@@ -87,7 +87,7 @@ var store = new vuex.Store({
 
     removeFromPlaylist({ commit, dispatch }, song) {
       //Removes track from the database with delete
-      var url = 'http://localhost:3000/api/songs/'
+      var url = 'https://vue-jambox3000.herokuapp.com/music/songs'
       $.ajax({
         method: 'DELETE',
         url: url + song._id
@@ -98,7 +98,7 @@ var store = new vuex.Store({
     promoteTrack({ commit, dispatch }, song) {
       //this should increase the position / upvotes and downvotes on the track
       $.ajax({
-      url: 'http://localhost:3000/api/songs/' + song._id,
+      url: 'https://vue-jambox3000.herokuapp.com/music/songs' + song._id,
       method: 'PUT',
       contentType: 'application/json',
       data: JSON.stringify(song)
@@ -113,7 +113,7 @@ var store = new vuex.Store({
     demoteTrack({ commit, dispatch }, song) {
       //this should decrease the position / upvotes and downvotes on the track
       $.ajax({
-      url: 'http://localhost:3000/api/songs/' + song._id,
+      url: 'https://vue-jambox3000.herokuapp.com/music/songs' + song._id,
       method: 'PUT',
       contentType: 'application/json',
       data: JSON.stringify(song)
